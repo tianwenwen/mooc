@@ -3,12 +3,25 @@
       <div class="index-left">
         <div class="index-left-block">
           <h2>全部产品</h2>
-          <h3>PC产品</h3>
-          <ul>
-            <li v-for="item in productList.game">
-              <a :href="item.url">{{item.name}}</a>
+          <div v-for="(item,index) in productList.list">
+            <h3>{{item.title}}</h3>
+            <ul>
+            <li v-for="items in item.list">
+            <a :href="items.url">{{items.title}}</a>
             </li>
-          </ul>
+            </ul>
+          </div>
+        </div>
+        <div class="index-left-block">
+          <h2>最新消息</h2>
+          <div v-for="(item,index) in messageList.list">
+            <h3>{{item.title}}</h3>
+            <ul>
+              <li v-for="items in item.list">
+                <a :href="items.url">{{items.title}}</a>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
       <div class="index-right">
@@ -29,24 +42,52 @@
         data: function () {
             return {
               productList:{
-                game:[
+                list:[
                   {
-                    name:"aa",
-                    url:'1'
-                  },
-                  {
-                    name:"bb",
-                    url:''
+                    title:'PC产品',
+                    list:[
+                      {
+                        title:'数据统计',
+                        url:"",
+                      },
+                      {
+                        title:'数据预测',
+                        url:"",
+                      },
+                      {
+                        title:'流量分析',
+                        url:"",
+                      }
+                    ]
+                  },{
+                    title:'手机应用类',
+                    list:[
+                      {
+                        title:'产品助手',
+                        url:"",
+                      },
+                      {
+                        title:'智慧地图',
+                        url:"",
+                      },
+                      {
+                        title:'团副语言',
+                        url:"",
+                      }
+                    ]
                   }
-                ],
-                app:[
+                ]
+              },
+              messageList:{
+                list:[
                   {
-                    url:"11",
-                    name:''
-                  },
-                  {
-                    url:"122",
-                    name:''
+                    title:'',
+                    list:[
+                      {
+                        title:'广告发布',
+                        url:''
+                      }
+                    ]
                   }
                 ]
               },
@@ -91,5 +132,13 @@
   }
   .line-last{
     background: #efefef;
+  }
+  .index-left-block{
+    h2{
+      height: 40px;
+      color:#fff;
+      line-height: 40px;
+      background: #008800;
+    }
   }
 </style>
