@@ -3,34 +3,36 @@
       <div class="index-left">
         <div class="index-left-block">
           <h2>全部产品</h2>
-          <div v-for="(item,index) in productList.list">
-            <h3>{{item.title}}</h3>
+          <template v-for="(product,index) in productList.list">
+            <h3>{{product.title}}</h3>
             <ul>
-            <li v-for="items in item.list">
-            <a :href="items.url">{{items.title}}</a>
+            <li v-for="item in product.list">
+              <router-link :to="item.url">{{item.title}}</router-link>
             </li>
             </ul>
-          </div>
+            <hr v-if="index !=  productList.list.length-1">
+          </template>
         </div>
         <div class="index-left-block">
           <h2>最新消息</h2>
-          <div v-for="(item,index) in messageList.list">
-            <h3>{{item.title}}</h3>
+          <template v-for="(news,index) in newsList.list">
+            <h3>{{news.title}}</h3>
             <ul>
-              <li v-for="items in item.list">
-                <a :href="items.url">{{items.title}}</a>
+              <li v-for="item in news.list">
+                <router-link :to="item.url">{{item.title}}</router-link>
               </li>
             </ul>
-          </div>
+          </template>
         </div>
       </div>
       <div class="index-right">
-        <div class="index-board-list" v-for="(item,index) in boardList" :class="['index-board-'+index,{'line-last':(index+1)%2 ===0}]">
+        <router-view></router-view>
+        <div class="index-board-list" v-for="(board,index) in boardList" :class="['index-board-'+index,{'line-last':(index+1)%2 ===0}]">
           <div class="index-board-item-inner">
-            <h2>{{index+1}} {{item.title}}</h2>
-            <p>{{item.description}}</p>
+            <h2>{{index+1}} {{board.title}}</h2>
+            <p>{{board.description}}</p>
             <div class="index-board-button">
-              <router-link class="button" :to="{path:'detail'}">立刻购买</router-link>
+              <router-link class="button" :to="{name:'buy', params:{id: board.id }}">立刻购买</router-link>
             </div>
           </div>
         </div>
@@ -39,82 +41,33 @@
 </template>
 <script>
   export default {
-        data: function () {
+      data: function () {
             return {
-              productList:{
-                list:[
-                  {
-                    title:'PC产品',
-                    list:[
-                      {
-                        title:'数据统计',
-                        url:"",
-                      },
-                      {
-                        title:'数据预测',
-                        url:"",
-                      },
-                      {
-                        title:'流量分析',
-                        url:"",
-                      }
-                    ]
-                  },{
-                    title:'手机应用类',
-                    list:[
-                      {
-                        title:'产品助手',
-                        url:"",
-                      },
-                      {
-                        title:'智慧地图',
-                        url:"",
-                      },
-                      {
-                        title:'团副语言',
-                        url:"",
-                      }
-                    ]
-                  }
-                ]
-              },
-              messageList:{
-                list:[
-                  {
-                    title:'',
-                    list:[
-                      {
-                        title:'广告发布',
-                        url:''
-                      }
-                    ]
-                  }
-                ]
-              },
-              boardList:[
-                {
-                  title:'fff',
-                  description:"fffffffff",
-                },
-                {
-                  title:'fff',
-                  description:"fffffffff",
-                },
-                {
-                  title:'fff',
-                  description:"fffffffff",
-                },
-                {
-                  title:'fff',
-                  description:"fffffffff",
-                },
-                {
-                  title:'fff',
-                  description:"fffffffff",
-                }
-              ]
+              productList:{},
+              newsList:{},
+              boardList:[]
             }
-        }
+        },
+      created:function(){
+        this.$http.get('/api/productList').then(function(response){
+          if(response.status == '200'){
+            this.productList = response.body
+          }
+
+        }),
+          this.$http.get('/api/newsList').then(function(response){
+            if(response.status == '200'){
+              this.newsList = response.body;
+            }
+
+          }),
+          this.$http.get('/api/boardList').then(function(response){
+            if(response.status == '200'){
+              this.boardList = response.body;
+            }
+          })
+
+      }
     }
 
 </script>
