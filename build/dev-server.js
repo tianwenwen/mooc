@@ -7,6 +7,7 @@ if (!process.env.NODE_ENV) {
 
 var opn = require('opn')
 var path = require('path')
+var fs = require('fs');
 var express = require('express')
 var webpack = require('webpack')
 var jsonServer = require('json-server');
@@ -26,19 +27,33 @@ var proxyTable = config.dev.proxyTable
 var app = express()
 var compiler = webpack(webpackConfig);
 
-var apiServer = jsonServer.create();
-var apiRouter = jsonServer.router('db.json');
-var middlewares = jsonServer.defaults();
-apiServer.use(middlewares)
-apiServer.use(jsonServer.rewriter({
-  '/api/':'/'
-}));
-apiServer.use(apiRouter);
-apiServer.listen(port+1, () => {
+//var apiServer = jsonServer.create();
+//var apiRouter = jsonServer.router('db.json');
+//var middlewares = jsonServer.defaults();
+//apiServer.use(middlewares)
+//apiServer.use(jsonServer.rewriter({
+//  '/api/':'/'
+//}));
+//apiServer.use(apiRouter);
+//apiServer.listen(port+1, () => {
+//  console.log('JSON Server is running')
+//});
+var apiRoutes = express.Router();
+apiRoutes.route("/:apiName").all(function(req,res){
+  fs.readFile('./db.json','utf-8',function(err,data){
+    if(err) throw err;
+    var data = JSON.parse(data);
+    if(data[req.params.apiName]){
+      res.json(data[req.params.apiName])
+    }else{
+      res.send('no such api name')
+    }
+  })
+})
+app.use('/api',apiRoutes);
+app.listen(port+1, function(){
   console.log('JSON Server is running')
 });
-
-
 var devMiddleware = require('webpack-dev-middleware')(compiler, {
   publicPath: webpackConfig.output.publicPath,
   quiet: true
