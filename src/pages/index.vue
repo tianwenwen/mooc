@@ -26,7 +26,7 @@
       </div>
     </div>
     <div class="index-right">
-      <slider-show :sliders="sliders" :inv="slideSpeed"></slider-show>
+      <slider-show :sliders="sliders" :inv="slideSpeed" @onChange="slideChange"></slider-show>
       <div class="index-board-list" v-for="(board,index) in boardList"
            :class="['index-board-'+index,{'line-last':(index+1)%2 ===0}]">
         <div class="index-board-item-inner">
@@ -98,6 +98,11 @@
           }
         })
 
+    },
+    methods:{
+      slideChange:function(index){
+        console.log(index)
+      }
     }
   }
 

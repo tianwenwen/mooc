@@ -59,7 +59,8 @@
         setTimeout(function(){
           me.isShow = true;
           me.nowIndex = index;
-        });
+          me.$emit('onChange',index)
+        },10);
       },
       runInv:function(){
         var me = this;
