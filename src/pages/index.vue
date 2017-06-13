@@ -43,7 +43,8 @@
   </div>
 </template>
 <script>
-  import sliderShow from '../components/sliderShow.vue'
+  import sliderShow from '../components/sliderShow.vue';
+
   export default {
     data: function () {
       return {
