@@ -4,9 +4,10 @@
       <div class="app-head-inner">
         <div class="head-nav">
           <ul>
-            <li @click="login">登录</li>
-            <li @click="register">注册</li>
-            <li @click="about">关于</li>
+            <li>{{username}}</li>
+            <li v-if="username == '' " @click="login">登录</li>
+            <li v-if="username == '' " @click="register">注册</li>
+            <li @click="aboutDia">关于</li>
           </ul>
         </div>
       </div>
@@ -19,35 +20,69 @@
     <div class="app-footer">
       copyRight
     </div>
-    <my-dialog :isShow="isShow">
-      <p>other</p>
+    <my-dialog :is-show="isShowDialog" @on-close="closeDialog">
+      <keep-alive>
+        <!--//:is 动态绑定组件-->
+        <div :is="currentDialog" :data="dialogCon" @has-log="successLog"></div>
+      </keep-alive>
     </my-dialog>
   </div>
 </template>
 <script>
-  import dialog from './dialog.vue';
+  import Dialog from './dialog.vue';
+  import Login from './login.vue';
+  import Register from './register.vue';
+  import About from './about.vue';
   export default {
     data: function () {
       return {
-        isShow: false
+        isShowDialog: false,
+        aboutCon:'',
+        currentDialog:"",
+        dialogCon:'',
+        username:''
       }
     },
     components: {
-      myDialog: dialog
+      myDialog: Dialog,
+      loginCom:Login,
+      registerCom:Register,
+      aboutCom:About
     },
     computed:{
 
     },
     methods: {
       login: function () {
-        this.isShow = true;
+        this.dialogCon ='';
+        this.currentDialog = "loginCom";
+        this.isShowDialog = true;
       },
       register: function () {
-        this.isShow = true;
+        this.dialogCon ='';
+        this.currentDialog = "registerCom";
+        this.isShowDialog = true;
       },
-      about: function () {
-        this.isShow = true;
+      aboutDia: function () {
+        this.dialogCon = this.aboutCon;
+        this.currentDialog = "aboutCom";
+        this.isShowDialog = true;
+      },
+      closeDialog:function(){
+        this.isShowDialog = false;
+      },
+      successLog:function(data){
+        this.username = data;
+        this.isShowDialog = false;
       }
+    },
+    created:function(){
+      var me = this;
+      me.$http.get('/api/about').then(function (response) {
+        if (response.status == '200') {
+          me.aboutCon = response.body
+        }
+      })
     }
   }
 

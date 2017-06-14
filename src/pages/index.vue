@@ -101,6 +101,9 @@
 
     },
     methods:{
+
+    },
+    computed:{
       slideChange:function(index){
         console.log(index)
       }

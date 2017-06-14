@@ -1,11 +1,13 @@
 <template>
   <div>
     <div class="dialog-wrap">
-      <div class="dialog-cover" v-if="isShow" @click="close"></div>
-      <div class="dialog-content" v-if="isShow">
-        <p class="dialog-close" @click="close">&otimes;</p>
-        <slot>empty</slot>
-      </div>
+      <div class="dialog-cover" v-if="isShow" @click="closeDialog"></div>
+      <transition name="drop">
+        <div class="dialog-content" v-if="isShow">
+          <p class="dialog-close" @click="closeDialog">&otimes;</p>
+          <slot>empty</slot>
+        </div>
+      </transition>
     </div>
   </div>
 </template>
@@ -22,8 +24,8 @@
       return {}
     },
     methods:{
-      close:function(){
-        this.isShow = false;
+      closeDialog:function(){
+        this.$emit('on-close')
       }
     }
   }
@@ -69,6 +71,7 @@
     border:2px solid #464068;
     padding:2%;
     line-height:1.6;
+    padding-bottom:45px;
   }
   .dialog-close{
     position: absolute;
