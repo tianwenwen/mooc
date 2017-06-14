@@ -1,7 +1,6 @@
 <template>
     <div>
-      {{$route.params.id}}
-
+        count
     </div>
 </template>
 

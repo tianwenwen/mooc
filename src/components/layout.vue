@@ -2,12 +2,16 @@
   <div>
     <div class="app-head">
       <div class="app-head-inner">
+        <router-link :to="{path:'/'}">
+          <img src="../assets/icon_back.png" alt="首页">
+        </router-link>
         <div class="head-nav">
           <ul>
             <li>{{username}}</li>
-            <li v-if="username == '' " @click="login">登录</li>
+            <li v-if="username == '' " @click="onLogin">登录</li>
             <li v-if="username == '' " @click="register">注册</li>
             <li @click="aboutDia">关于</li>
+            <li v-if="username" @click="exitLogin">退出</li>
           </ul>
         </div>
       </div>
@@ -53,10 +57,13 @@
 
     },
     methods: {
-      login: function () {
+      onLogin: function () {
         this.dialogCon ='';
         this.currentDialog = "loginCom";
         this.isShowDialog = true;
+      },
+      exitLogin:function(){
+        this.username = '';
       },
       register: function () {
         this.dialogCon ='';

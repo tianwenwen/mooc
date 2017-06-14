@@ -35,7 +35,7 @@
           <p>{{board.description}}</p>
 
           <div class="index-board-button">
-            <router-link class="button" :to="{name:'buy', params:{id: board.id }}">立刻购买</router-link>
+            <router-link class="button" :to="{name:'detail', params:{id: board.id }}">立刻购买</router-link>
           </div>
         </div>
       </div>
@@ -56,7 +56,7 @@
           {
             src:require('../assets/slideShow/pic.jpg'), //在js中图片需要require
             title:'xx1',
-            href:"detail/analysis"
+            href:"detail/analysis" //a标签也可以直接写路由地址
           },
           {
             src:require('../assets/slideShow/pic1.jpg'),
@@ -71,7 +71,7 @@
           {
             src:require('../assets/slideShow/pic3.jpg'),
             title:'xx4',
-            href:"http://www.baidu.com"
+            href:"detail/count"
           }
         ]
       }

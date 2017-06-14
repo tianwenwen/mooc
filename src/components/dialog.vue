@@ -36,13 +36,13 @@
     transition:all .5s ease;
   }
   .drop-leave-active{
-    transition:all .3s ease;
+    transition:all .4s ease;
   }
   .drop-enter{
     transform:translateY(-500px);
   }
   .drop-leave-active{
-    transform: translateY(500px);
+    transform: translateY(-500px);
   }
   .dialog-wrap{
     position:relative;

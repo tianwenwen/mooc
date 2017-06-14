@@ -7,7 +7,11 @@ import VueResource from 'vue-resource'
 import Layout from './components/layout'
 
 import IndexPage from './pages/index'
-import BuyPage from './pages/buy'
+import DetailPage from './pages/detail'
+import DetailAna from './pages/detail/analysis.vue';
+import DetailCou from './pages/detail/count.vue';
+import DetailFor from './pages/detail/forecast.vue';
+import DetailPub from './pages/detail/publish.vue';
 
 Vue.use(VueRouter);
 Vue.use(VueResource);
@@ -19,9 +23,28 @@ var routes =[
     component:IndexPage
   },
   {
-    name:'buy',
-    path:'/buy',
-    component:BuyPage
+    name:'detail',
+    path:'/detail',
+    redirect:"/detail/count",
+    component:DetailPage,
+    children:[
+      {
+        path:'count',
+        component:DetailCou
+      },
+      {
+        path:'forecast',
+        component:DetailFor
+      },
+      {
+        path:'analysis',
+        component:DetailAna
+      },
+      {
+        path:'publish',
+        component:DetailPub
+      }
+    ]
   }
 ]
 var router = new VueRouter({
