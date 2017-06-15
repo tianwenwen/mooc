@@ -82,5 +82,8 @@
   },
   "login":{
 
+  },
+  "getPrice":{
+    "amount":44
   }
 }
