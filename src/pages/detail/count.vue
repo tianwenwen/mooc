@@ -1,12 +1,41 @@
 <template>
   <div>
-    <a @click="getPrice">count</a>
-    {{price.amount}}
+    <a>count</a>
+    <button @click="buy">购买</button>
+    <my-dialog :is-show="isShowDialog" @on-close="closeDialog">
+      <table>
+      <thead>
+      <tr>
+        <td>序号</td>
+        <td>价格</td>
+      </tr>
+      </thead>
+       <tbody>
+       <tr>
+         <td>1</td>
+         <td>{{price.amount}}</td>
+       </tr>
+       </tbody>
+     </table>
+      请选择：
+      <button @click="sureBuy">确认购买</button>
+    </my-dialog>
+
+    <check-order :isShowCheckDialog="isShowCheckDialog" @on-close-check="closeCheck" :orderId="orderId">
+      订单编号：{{orderId}}
+    </check-order>
+
+    <my-dialog :is-show="isShowErrorDialog" @on-close="closeErrorDialog">
+      支付失败
+    </my-dialog>
+
   </div>
 </template>
 
 <script>
-  import _ from 'lodash'
+  import _ from 'lodash';
+  import Dialog from '../../components/base/dialog.vue';
+  import CheckOrder from '../../components/checkOrder.vue'
   export default {
     data: function () {
       return {
@@ -21,8 +50,15 @@
           }
         ],
         period: '',
-        price:''
+        price:'',
+        isShowDialog:false,
+        isShowCheckDialog:false,
+        isShowErrorDialog:false
       }
+    },
+    components:{
+      myDialog:Dialog,
+      checkOrder:CheckOrder
     },
     mounted:{
       //渲染完
@@ -44,6 +80,31 @@
               this.price = data.data
             }
         })
+      },
+      buy:function(){
+        this.isShowDialog = true;
+        this.getPrice();
+      },
+      closeDialog:function(){
+        this.isShowDialog = false;
+      },
+      closeErrorDialog:function(){
+        this.isShowErrorDialog = false;
+      },
+      sureBuy:function(){
+        this.$http.get('/api/createOrder').then(function(data){
+          if(data.status == '200'){
+            this.orderId = data.data.orderId;
+            this.isShowDialog = false;
+            this.isShowCheckDialog = true;
+          }
+        },function(){
+          this.isShowDialog = false;
+          this.isShowErrorDialog = true;
+        });
+      },
+      closeCheck:function(){
+        this.isShowCheckDialog = false;
       }
     }
   }

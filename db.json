@@ -52,7 +52,7 @@
   "boardList":[
     {
       "id":"1",
-      "title":"fff",
+      "title":"test2",
       "description":"fffffffff"
     },
     {
@@ -84,6 +84,12 @@
 
   },
   "getPrice":{
-    "amount":44
+    "amount":454
+  },
+  "createOrder":{
+    "orderId":"rw43gffgfd677"
+  },
+  "checkStatus":{
+    "checkStatus":true
   }
 }

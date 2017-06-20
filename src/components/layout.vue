@@ -33,7 +33,7 @@
   </div>
 </template>
 <script>
-  import Dialog from './dialog.vue';
+  import Dialog from './base/dialog.vue';
   import Login from './login.vue';
   import Register from './register.vue';
   import About from './about.vue';
