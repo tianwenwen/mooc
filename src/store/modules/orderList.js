@@ -14,7 +14,7 @@ const getters = {//用于页面去调用state值
 
 // actions
 const actions = {//可以进行异步操作的动作
-  fetchOrderList ({commit,state}){
+  fetchOrderList:function({commit,state}){
     //commit 用来调用mutations
     //state 用来调用数据集里的数据的
     Vue.http.post('/api/getOrderList',state.params).then(function(data){
