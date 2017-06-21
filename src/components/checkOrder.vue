@@ -6,10 +6,10 @@
       <button @click="checkStatus">支付成功</button>
       <button @click="checkStatus">支付失败</button>
     </my-dialog>
-    <my-dialog :is-show="isShowSuccessDialog" @on-close="closeSuccessDialog">
+    <my-dialog :is-show="isShowSuccessDialog" @on-close="toOrderList">
       购买成功
     </my-dialog>
-    <my-dialog :is-show="isShowFailDialog" @on-close="closeErrorDialog">
+    <my-dialog :is-show="isShowFailDialog" @on-close="toOrderList">
       购买失败
     </my-dialog>
   </div>
@@ -53,11 +53,8 @@
            this.$emit('on-close-check');
          });
       },
-      closeSuccessDialog:function(){
-        this.isShowSuccessDialog = false
-      },
-      closeErrorDialog:function(){
-        this.isShowFailDialog = false;
+      toOrderList:function(){
+        this.$router.push({path:'/orderList'}) //使用push进行跳转，和router-link to的是一样的
       }
     }
   }

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div @click="resetComponent">
     <div class="app-head">
       <div class="app-head-inner">
         <router-link :to="{path:'/'}">
@@ -33,6 +33,7 @@
   </div>
 </template>
 <script>
+  import {eventBus} from '../eventHub'
   import Dialog from './base/dialog.vue';
   import Login from './login.vue';
   import Register from './register.vue';
@@ -81,6 +82,9 @@
       successLog:function(data){
         this.username = data;
         this.isShowDialog = false;
+      },
+      resetComponent:function(){
+        eventBus.$emit('reset-component')
       }
     },
     created:function(){
