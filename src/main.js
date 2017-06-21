@@ -12,6 +12,9 @@ import DetailAna from './pages/detail/analysis.vue';
 import DetailCou from './pages/detail/count.vue';
 import DetailFor from './pages/detail/forecast.vue';
 import DetailPub from './pages/detail/publish.vue';
+import OrderList from './pages/orderList.vue';
+
+import store from './store/index' //可简写为'./store/' 数据模型
 
 Vue.use(VueRouter);
 Vue.use(VueResource);
@@ -45,6 +48,11 @@ var routes =[
         component:DetailPub
       }
     ]
+  },
+  {
+    name:'orderList',
+    path:'/orderList',
+    component:OrderList
   }
 ]
 var router = new VueRouter({
@@ -56,6 +64,7 @@ var router = new VueRouter({
 new Vue({
   el: '#app',
   router,
+  store,
   template: '<Layout/>',
   components: { Layout }
 })
